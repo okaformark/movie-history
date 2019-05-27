@@ -9,10 +9,11 @@ const signMeIn = () => {
 };
 
 const authDomStringBuilder = () => {
-  let domString = '';
-  domString += '<button id="google-auth"  class="btn btn-outline-danger">';
-  domString += `<img src = ${netflixImg} class = "d-flex flex-column"/>Click here to sign in`;
+  let domString = '<div class="d-flex justify-content-center">';
+  domString += '<button id="google-auth" class="btn btn-outline-danger">';
+  domString += `<img src = ${netflixImg} class= "d-flex flex-column"/>Click here to sign in`;
   domString += '</button>';
+  domString += '</div>';
   util.printToDom('auth', domString);
   document.getElementById('google-auth').addEventListener('click', signMeIn);
 };
