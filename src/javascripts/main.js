@@ -1,4 +1,9 @@
+import auth from './components/auth/auth';
 import '../styles/main.scss';
 import 'bootstrap';
 
-console.error('movieeee');
+const init = () => {
+  auth.authDomStringBuilder();
+};
+
+init();
