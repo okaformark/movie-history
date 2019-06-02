@@ -15,6 +15,7 @@ const init = () => {
   auth.authDomStringBuilder();
   moviesData.getMovies();
   movies.movieDomStringBuilder();
+  navBarEvent.addMovieEvent();
 };
 
 init();
