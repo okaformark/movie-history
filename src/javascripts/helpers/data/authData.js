@@ -8,6 +8,9 @@ const myMovieNavBar = document.getElementById('navbar-button-movieHistory');
 const myMovieButton = document.getElementById('myMovieBtn');
 const logOutButton = document.getElementById('logOutBtn');
 const authButton = document.getElementById('authBtn');
+const movieDiv = document.getElementById('movie-div');
+const addMovieNavBar = document.getElementById('navbar-button-addMovie');
+const addMovieButton = document.getElementById('addMovieBtn');
 
 const checkLoginStatus = () => {
   firebase.auth().onAuthStateChanged((user) => {
@@ -20,6 +23,9 @@ const checkLoginStatus = () => {
       myMovieButton.classList.remove('hide');
       logOutButton.classList.remove('hide');
       authButton.classList.add('hide');
+      movieDiv.classList.remove('hide');
+      addMovieNavBar.classList.remove('hide');
+      addMovieButton.classList.remove('hide');
     } else {
       authNavBar.classList.remove('hide');
       logOutNavBar.classList.add('hide');
@@ -28,6 +34,9 @@ const checkLoginStatus = () => {
       logOutButton.classList.add('hide');
       myMovieButton.classList.add('hide');
       authButton.classList.remove('hide');
+      movieDiv.classList.add('hide');
+      addMovieNavBar.classList.add('hide');
+      addMovieButton.classList.add('hide');
     }
   });
 };

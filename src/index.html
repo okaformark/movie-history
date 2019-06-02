@@ -4,12 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <title>Movie History</title>
 </head>
 <body>
   <div id="navBar">
     <nav class="navbar navbar-expand-lg navbar-danger bg-dark">
-      <a class="navbar-brand" href="#"><h1 style="font-family:impact Charcoal sans-serif" class= "text-danger">MOVIES</h1></a>
+      <a class="navbar-brand" href="#"><h1 style="font-family:impact Charcoal sans-serif" class= "text-danger"><i class="material-icons" style="font-size:48px;color:red">movie_creation</i>MOVIES</h1></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -20,9 +21,15 @@
               <a id="navbar-button-auth" class="nav-link">Authentication</a>
             </li>
           </button>
-          <button class="btn btn-outline-danger hide" id="myMovieBtn">
+          <button class="btn btn-outline-danger hide" id="addMovieBtn">
             <li class="nav-item">
-              <a id="navbar-button-movieHistory" class="nav-link hide">My Movies</a>
+              <a id="navbar-button-addMovie" class="nav-link hide"> <i class="material-icons">movie_creation</i>Add a Movie</a>
+            </li>
+          </button>
+          &nbsp; &nbsp;
+          <button type="button"class="btn btn-outline-danger hide" id="myMovieBtn">
+            <li class="nav-item">
+              <a id="navbar-button-movieHistory" class="nav-link hide"><i class="material-icons">movie_creation</i>My Movies</a>
             </li>
           </button>
           &nbsp; &nbsp;
@@ -37,5 +44,6 @@
   </div>
   <div id="auth"></div>
   <div id="movie-div"></div>
+  <div id="movie-form"></div>
 </body>
 </html>

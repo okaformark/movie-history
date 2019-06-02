@@ -1,5 +1,6 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import movies from '../movies/movies';
 
 const navBarEvents = () => {
   const navLinks = document.getElementsByClassName('nav-link');
@@ -11,4 +12,13 @@ const navBarEvents = () => {
     });
   }
 };
-export default { navBarEvents };
+const createMovieForm = () => {
+  document.getElementById('movie-div').classList.add('hide');
+  movies.addMovieFormDomStringBuilder();
+};
+
+const addMovieEvent = () => {
+  document.getElementById('addMovieBtn').addEventListener('click', createMovieForm);
+};
+
+export default { navBarEvents, addMovieEvent };
