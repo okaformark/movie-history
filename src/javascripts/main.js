@@ -14,8 +14,9 @@ const init = () => {
   navBar.checkLoginStatus();
   auth.authDomStringBuilder();
   moviesData.getMovies();
-  movies.movieDomStringBuilder();
   navBarEvent.addMovieEvent();
+  movies.movieDomStringBuilder();
+  // movies.submitForm();
 };
 
 init();

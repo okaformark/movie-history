@@ -1,60 +1,50 @@
 {
   "movie1":{
-    "id": "movie1",
     "Title": "Avengers:Infinity war",
     "imageUrl": "https://images-na.ssl-images-amazon.com/images/I/81oTRumvcRL._SY445_.jpg",
     "movieRating": "G"
     },
   "movie2":{
-    "id": "movie2",
     "Title": "Avengers: Endgame",
     "imageUrl": "https://cdn.cnn.com/cnnnext/dam/assets/190403144228-avengers-endgame-thumb-imax-poster-exlarge-169.jpg",
     "movieRating": "PG-13"
     },
   "movie3":{
-    "id": "movie3",
     "Title": "Winter Soldier",
     "imageUrl": "https://images-na.ssl-images-amazon.com/images/I/51V4Fp58HkL._SY445_.jpg",
     "movieRating": "PG-18"
     },
   "movie4":{
-    "id": "movie4",
     "Title": "Black Panther",
     "imageUrl": "https://upload.wikimedia.org/wikipedia/en/0/0c/Black_Panther_film_poster.jpg",
     "movieRating": "PG-18"
     },
   "movie5":{
-    "id": "movie5",
     "Title": "Thor: Ragnarok",
     "imageUrl": "https://upload.wikimedia.org/wikipedia/en/7/7d/Thor_Ragnarok_poster.jpg",
     "movieRating": "Rated R"
     },
   "movie6":{
-    "id": "movie6",
     "Title": "Captain Marvel",
     "imageUrl": "https://m.media-amazon.com/images/M/MV5BMTE0YWFmOTMtYTU2ZS00ZTIxLWE3OTEtYTNiYzBkZjViZThiXkEyXkFqcGdeQXVyODMzMzQ4OTI@._V1_.jpg",
     "movieRating": "Rated-X"
     },
   "movie7":{
-    "id": "movie7",
     "Title": "Dr. Strange",
     "imageUrl": "https://images-na.ssl-images-amazon.com/images/I/51ntUQzmadL.jpg",
     "movieRating": "G"
     },
   "movie8":{
-    "id": "movie8",
     "Title": "Civil War",
     "imageUrl": "https://upload.wikimedia.org/wikipedia/en/5/53/Captain_America_Civil_War_poster.jpg",
     "movieRating": "NC-17"
     },
   "movie9":{
-    "id": "movie9",
     "Title": "Guardians of the Galaxy",
     "imageUrl": "https://m.media-amazon.com/images/M/MV5BMTAwMjU5OTgxNjZeQTJeQWpwZ15BbWU4MDUxNDYxODEx._V1_.jpg",
     "movieRating": "NC-17"
     },
   "movie10":{
-    "id": "movie10",
     "Title": "Spiderman: Homecoming",
     "imageUrl": "http://thebabuzz.com/wp-content/uploads/2017/09/spider-man-homecoming-banner.jpg",
     "movieRating": "PG-13"

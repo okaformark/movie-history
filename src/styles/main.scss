@@ -35,7 +35,10 @@ h1 { font-size: 1.5em; margin: 10px; }
   border: none;
   float: right;
 }
-.rating > input { display: none; } 
+.rating > input { 
+  display: none;
+}
+ 
 .rating > label:before { 
   margin: 5px;
   font-size: 1.25em;
