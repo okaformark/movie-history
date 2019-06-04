@@ -15,7 +15,6 @@ const addMovieButton = document.getElementById('addMovieBtn');
 const checkLoginStatus = () => {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
-      console.error(user);
       authDiv.classList.add('hide');
       authNavBar.classList.add('hide');
       myMovieNavBar.classList.remove('hide');

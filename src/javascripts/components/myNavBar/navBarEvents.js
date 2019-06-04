@@ -15,6 +15,9 @@ const navBarEvents = () => {
 const createMovieForm = () => {
   document.getElementById('movie-div').classList.add('hide');
   movies.addMovieFormDomStringBuilder();
+  document.getElementById('Movie-Title').value = '';
+  document.getElementById('Movie-url').value = '';
+  document.getElementById('Movie-rating').value = '';
 };
 
 const addMovieEvent = () => {
