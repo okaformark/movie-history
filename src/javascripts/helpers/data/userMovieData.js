@@ -1,7 +1,7 @@
 import axios from 'axios';
 import apiKeys from '../apiKeys.json';
 
-const firebaseUrl = apiKeys.firebaseKeys.databaseUrl;
+const firebaseUrl = apiKeys.firebaseKeys.databaseURL;
 
 const getUserMovieByUserId = userId => new Promise((resolve, reject) => {
   axios.get(`${firebaseUrl}/userMovie.json?orderBy="userId"&equalTo="${userId}"`)
@@ -11,6 +11,7 @@ const getUserMovieByUserId = userId => new Promise((resolve, reject) => {
       // console.error(userMovieResult);
       const userMovies = [];
       Object.keys(userMovieResult).forEach((userMovieId) => {
+        console.error(userMovieId);
         userMovieResult[userMovieId].id = userMovieId;
         userMovies.push(userMovieResult[userMovieId]);
       });
@@ -18,7 +19,7 @@ const getUserMovieByUserId = userId => new Promise((resolve, reject) => {
     })
     .catch(err => reject(err));
 });
-const editUserMovie = (watchlistId, userWatchlistObj) => axios.put(`${firebaseUrl}/userMovies/${watchlistId}.json`, userWatchlistObj);
-const addUserMovie = userWatchlist => axios.post(`${firebaseUrl}/userMovies.json`, userWatchlist);
+const editUserMovie = (watchlistId, userWatchlistObj) => axios.put(`${firebaseUrl}/userMovie/${watchlistId}.json`, userWatchlistObj);
+const addUserMovie = userWatchlist => axios.post(`${firebaseUrl}/userMovie.json`, userWatchlist);
 
 export default { getUserMovieByUserId, editUserMovie, addUserMovie };
