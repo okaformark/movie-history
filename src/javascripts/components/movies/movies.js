@@ -7,17 +7,15 @@ import util from '../../helpers/util';
 
 const addToWatchList = (e) => {
   const watchlistId = e.target.id.split('.')[1];
-  console.error(watchlistId);
-
   const userWatchList = {
-    userId: e.target.closest('div').id,
+    userId: firebase.auth().currentUser.uid,
     movieId: e.target.id.split('.')[1],
     isWatched: e.target.value,
     rating: '',
   };
   if (watchlistId) {
     userMovieData.editUserMovie(watchlistId, userWatchList)
-      .then(() => getUserMovie(firebase.auth().currentUser.userId)) // eslint-disable-line no-use-before-define
+      .then(() => getUserMovie(firebase.auth().currentUser.uid)) // eslint-disable-line no-use-before-define
       .catch(err => console.error('couldnt add to userMovie', err));
   } else {
     userMovieData.addUserMovie(userWatchList)
@@ -26,12 +24,54 @@ const addToWatchList = (e) => {
   }
 };
 
+const addToWatchListByRating = (e) => {
+  const ratingId = e.target.id.split('.')[1];
+  console.error(ratingId);
+  const userRatingWatchList = {
+    userId: firebase.auth().currentUser.uid,
+    movieId: e.target.id.split('.')[1],
+    isWatched: 'true',
+    rating: e.target.value,
+  };
+  // console.error(userRatingWatchList);
+  if (ratingId) {
+    userMovieData.editUserMovieByRating(ratingId, userRatingWatchList)
+      .then(() => getUserMovie(firebase.auth().currentUser.uid)) // eslint-disable-line no-use-before-define
+      .catch(err => console.error('couldnt add to userMovie', err));
+  } else {
+    userMovieData.addUserMovie(userRatingWatchList)
+      .then(() => getUserMovie(firebase.auth().currentUser.uid)) // eslint-disable-line no-use-before-define
+      .catch(err => console.error('usermovie error', err));
+  }
+};
+
+const watchListDomStringBuilder = (finalMovieCollection) => {
+  let domString = '<div class="container d-flex hide">';
+  domString += '<div class="row" >';
+  finalMovieCollection.forEach((one) => {
+    domString += '<div class= "card border-danger mb-2 m-2 col-3">';
+    domString += `<h4 class="card-header">${one.Title}</h4>`;
+    domString += `<img class="card-img-top" src=${one.imageUrl} height="300"/>`;
+    domString += '<div>';
+    domString += '<input type="radio" class= "removeMovie" name="selection">';
+    domString += '<label for="remove-movie">Remove from WatchList</label>';
+    domString += '</div>';
+    domString += `<h6>${one.movieRating}</h6>`;
+  });
+  util.printToDom('movie-watchlist', domString);
+};
+
 const addEvents = () => {
   const radioBtn = document.getElementsByClassName('addMovie');
   for (let i = 0; i < radioBtn.length; i += 1) {
     radioBtn[i].addEventListener('click', addToWatchList);
   }
+  const ratingBtn = document.getElementsByName('rating');
+  for (let j = 0; j < ratingBtn.length; j += 1) {
+    ratingBtn[j].addEventListener('click', addToWatchListByRating);
+  }
 };
+// document.getElementById('navbar-button-movieHistory').addEventListener('click', watchListDomStringBuilder);
 
 const movieDomStringBuilder = () => {
   let domString = '<div class="container d-flex hide">';
@@ -45,12 +85,12 @@ const movieDomStringBuilder = () => {
       domString += `<input id="radio.${movie.id}" type="radio" class= "addMovie" name="selection" value="false">`;
       domString += `<label for="radio.${movie.id}">Add to WatchList</label>`;
       domString += '</div>';
-      domString += '<div>';
+      domString += `<div id= ${movie.id}>`;
       domString += '<input type="radio" class= "removeMovie" name="selection">';
       domString += '<label for="remove-movie">Remove from WatchList</label>';
       domString += '</div>';
       domString += `<h6>${movie.movieRating}</h6>`;
-      domString += `<fieldset id="stars${movie.id}" class="rating">`;
+      domString += `<fieldset id="stars.${movie.id}" class="rating">`;
       domString += `<input type="radio" id="star5.${movie.id}" name="rating" value="5" /><label class = "full" for="star5.${movie.id}" title="Awesome - 5 stars"></label>`;
       domString += `<input type="radio" id="star4half.${movie.id}" name="rating" value="4 and a half" /><label class="half" for="star4half.${movie.id}" title="Pretty good - 4.5 stars"></label>`;
       domString += `<input type="radio" id="star4.${movie.id}" name="rating" value="4" /><label class = "full" for="star4.${movie.id}" title="Pretty good - 4 stars"></label>`;
@@ -88,7 +128,6 @@ const submitMovie = (e) => {
       // getMovies(firebase.auth().currentUser.uid); // eslint-disable-line no-use-before-define
     })
     .catch(err => console.error('could not add movie', err));
-  console.error(newMovie);
   movieDomStringBuilder();
 };
 
@@ -116,26 +155,13 @@ const addMovieFormDomStringBuilder = () => {
   document.getElementById('addNewMovie').addEventListener('click', submitMovie);
 };
 
-const watchListDomStringBuilder = (finalMovieCollection) => {
-  let domString = '<div class="container d-flex hide">';
-  domString += '<div class="row" >';
-  finalMovieCollection.forEach((one) => {
-    domString += '<div class= "card border-danger mb-2 m-2 col-3">';
-    domString += `<h4 class="card-header">${one.Title}</h4>`;
-    domString += `<img class="card-img-top" src=${one.imageUrl} height="300"/>`;
-    domString += '<div>';
-    domString += '<input type="radio" class= "removeMovie" name="selection">';
-    domString += '<label for="remove-movie">Remove from WatchList</label>';
-    domString += '</div>';
-    domString += `<h6>${one.movieRating}</h6>`;
-  });
-  util.printToDom('movie-watchlist', domString);
-};
 
 const getUserMovie = (userId) => {
   userMovieData.getUserMovieByUserId(userId)
     .then((userMovie) => {
+      // console.error(userMovie);
       moviesData.getMovies(userId).then((movies) => {
+        // console.error(movies);
         const finalMovieCollection = SMASH.myUserMovie(userMovie, movies);
         watchListDomStringBuilder(finalMovieCollection);
       });
