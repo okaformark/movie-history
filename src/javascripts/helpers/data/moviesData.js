@@ -12,9 +12,9 @@ const getMovies = () => new Promise((resolve, reject) => {
       const movies = [];
       Object.keys(movieResult).forEach((movieId) => {
         movieResult[movieId].id = movieId;
-        // console.error(movieResult[movieId]);
         movies.push(movieResult[movieId]);
       });
+      // console.error(movies);
       resolve(movies);
     })
     .catch(err => reject(err));
