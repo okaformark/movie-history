@@ -5,6 +5,7 @@ import userMovieData from '../../helpers/data/userMovieData';
 import SMASH from '../../helpers/SMASH';
 import util from '../../helpers/util';
 
+
 const addToWatchList = (e) => {
   const watchlistId = e.target.id.split('.')[1];
   const userWatchList = {
@@ -44,21 +45,36 @@ const addToWatchListByRating = (e) => {
       .catch(err => console.error('usermovie error', err));
   }
 };
+const showWatchList = () => {
+  document.getElementById('movie-watchlist').classList.remove('hide');
+  document.getElementById('movie-div').classList.add('hide');
+};
 
-const watchListDomStringBuilder = (finalMovieCollection) => {
-  let domString = '<div class="container d-flex hide">';
-  domString += '<div class="row" >';
-  finalMovieCollection.forEach((one) => {
-    domString += '<div class= "card border-danger mb-2 m-2 col-3">';
-    domString += `<h4 class="card-header">${one.Title}</h4>`;
-    domString += `<img class="card-img-top" src=${one.imageUrl} height="300"/>`;
-    domString += '<div>';
-    domString += '<input type="radio" class= "removeMovie" name="selection">';
-    domString += '<label for="remove-movie">Remove from WatchList</label>';
-    domString += '</div>';
-    domString += `<h6>${one.movieRating}</h6>`;
-  });
+const deleteMovieEvent = (e) => {
+  const deleteMovieId = e.target.id.split('.')[1];
+  moviesData.deleteMovies(deleteMovieId)
+    .then(() => getUserMovie(firebase.auth().currentUser.uid)) // eslint-disable-line no-use-before-define
+    .catch(err => console.error('could not delete this movie', err));
+};
+
+
+const watchListDomStringBuilder = (finalWatchList) => {
+  let domString = '<div class="d-flex">';
+  domString += '<div class="container">';
+  domString += '<div class= "card border-danger mb-2 m-2 col-3">';
+  domString += `<h4 class="card-header">${finalWatchList.Title}</h4>`;
+  domString += `<img class="card-img-top" src=${finalWatchList.imageUrl} height="300"/>`;
+  domString += `<div id = ${finalWatchList.id}>`;
+  domString += '<input type="radio" class= "removeMovie" name="selection">';
+  domString += '<label for="remove-movie">Remove from WatchList</label>';
+  domString += '</div>';
+  domString += `<h6>${finalWatchList.movieRating}</h6>`;
+  domString += '</div>';
+  domString += '</div>';
+  domString += '</div>';
   util.printToDom('movie-watchlist', domString);
+  // document.getElementById('movie-div').classList.add('hide');
+  document.getElementById('movie-watchlist').classList.add('hide');
 };
 
 const addEvents = () => {
@@ -70,8 +86,14 @@ const addEvents = () => {
   for (let j = 0; j < ratingBtn.length; j += 1) {
     ratingBtn[j].addEventListener('click', addToWatchListByRating);
   }
+  const deleteMovieBtn = document.getElementsByClassName('removeMovie');
+  for (let k = 0; k < deleteMovieBtn.length; k += 1) {
+    deleteMovieBtn[k].addEventListener('click', deleteMovieEvent);
+  }
+  const myWatchList = document.getElementById('navbar-button-movieHistory');
+  myWatchList.addEventListener('click', showWatchList);
 };
-// document.getElementById('navbar-button-movieHistory').addEventListener('click', watchListDomStringBuilder);
+
 
 const movieDomStringBuilder = () => {
   let domString = '<div class="container d-flex hide">';
@@ -86,8 +108,8 @@ const movieDomStringBuilder = () => {
       domString += `<label for="radio.${movie.id}">Add to WatchList</label>`;
       domString += '</div>';
       domString += `<div id= ${movie.id}>`;
-      domString += '<input type="radio" class= "removeMovie" name="selection">';
-      domString += '<label for="remove-movie">Remove from WatchList</label>';
+      domString += `<input id="delete-movie.${movie.id}"type="radio" class= "removeMovie" name="selection">`;
+      domString += `<label for="delete-movie.${movie.id}">Delete this movie</label>`;
       domString += '</div>';
       domString += `<h6>${movie.movieRating}</h6>`;
       domString += `<fieldset id="stars.${movie.id}" class="rating">`;
@@ -159,11 +181,10 @@ const addMovieFormDomStringBuilder = () => {
 const getUserMovie = (userId) => {
   userMovieData.getUserMovieByUserId(userId)
     .then((userMovie) => {
-      // console.error(userMovie);
       moviesData.getMovies(userId).then((movies) => {
-        // console.error(movies);
         const finalMovieCollection = SMASH.myUserMovie(userMovie, movies);
-        watchListDomStringBuilder(finalMovieCollection);
+        const finalWatchList = finalMovieCollection.filter(eachOne => eachOne.isWatched === 'false' && eachOne.rating === '');
+        watchListDomStringBuilder(finalWatchList);
       });
     })
     .catch(err => console.error(err));
