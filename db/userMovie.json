@@ -3,36 +3,36 @@
     "userId": "z59FgtSTTGcJjZ2CgU6ZdHYW1a02",
     "movieId": "movie1",
     "isWatched": true,
-    "rating": "4.5"
+    "rating": "4 and a half"
   },
   "userMovie2": {
     "userId": "z59FgtSTTGcJjZ2CgU6ZdHYW1a02",
     "movieId": "movie1",
     "isWatched": false,
-    "rating": ""
+    "rating": "2"
   },
   "userMovie3": {
     "userId": "z59FgtSTTGcJjZ2CgU6ZdHYW1a02",
     "movieId": "movie1",
     "isWatched": true,
-    "rating": ""
+    "rating": "3 and a half"
   },
   "userMovie4": {
     "userId": "12345",
     "movieId": "movie2",
-    "isWatched": "false",
-    "rating": ""
+    "isWatched": false,
+    "rating": "1 and a half"
   },
   "userMovie5": {
     "userId": "12345",
     "movieId": "movie2",
     "isWatched": true,
-    "rating": "4.9"
+    "rating": "4"
   },
   "userMovie6": {
     "userId": "12345",
     "movieId": "movie2",
     "isWatched": true,
-    "rating": ""
+    "rating": "3"
   }
 }
