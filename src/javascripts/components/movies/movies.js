@@ -56,7 +56,6 @@ const deleteMovieEvent = (e) => {
   moviesData.deleteMovies(deleteMovieId)
     .then(() => getUserMovie(firebase.auth().currentUser.uid)) // eslint-disable-line no-use-before-define
     .catch(err => console.error('could not delete this movie', err));
-  getUserMovie(firebase.auth().currentUser.uid); // eslint-disable-line no-use-before-define
 };
 
 const removeMovieEvent = (e) => {
@@ -114,7 +113,9 @@ const movieDomStringBuilder = () => {
   moviesData.getMovies().then((movieResp) => {
     movieResp.forEach((movie) => {
       domString += '<div class= "card border-danger mb-2 m-2 col-3">';
-      domString += `<h4 class="card-header">${movie.Title}</h4>`;
+      domString += '<div class="card-header">';
+      domString += `<h5>${movie.Title}</h5>`;
+      domString += '</div>';
       domString += `<img class="card-img-top" src=${movie.imageUrl} height="300"/>`;
       domString += `<div id = ${movie.id}>`;
       domString += `<input id="radio.${movie.id}" type="radio" class= "addMovie" name="selection" value="false">`;
