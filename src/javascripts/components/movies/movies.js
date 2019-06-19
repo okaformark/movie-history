@@ -54,8 +54,9 @@ const showWatchList = () => {
 const deleteMovieEvent = (e) => {
   const deleteMovieId = e.target.id.split('.')[1];
   moviesData.deleteMovies(deleteMovieId)
-    .then(() => showWatchList()) // getUserMovie(firebase.auth().currentUser.uid)) // eslint-disable-line no-use-before-define
+    .then(() => getUserMovie(firebase.auth().currentUser.uid)) // eslint-disable-line no-use-before-define
     .catch(err => console.error('could not delete this movie', err));
+  getUserMovie(firebase.auth().currentUser.uid); // eslint-disable-line no-use-before-define
 };
 
 const removeMovieEvent = (e) => {
@@ -80,11 +81,9 @@ const watchListDomStringBuilder = (finalWatchList) => {
     domString += '</div>';
     domString += '</div>';
     domString += '</div>';
-    // document.getElementById('movie-div').classList.add('hide');
   });
   util.printToDom('movie-watchlist', domString);
   addEvents(); // eslint-disable-line no-use-before-define
-  // document.getElementById('movie-watchlist').classList.add('hide');
 };
 
 const addEvents = () => {
@@ -147,8 +146,7 @@ const movieDomStringBuilder = () => {
   }).catch(err => console.error('could not get movie', err));
 };
 
-const submitMovie = (e) => {
-  e.preventDefault();
+const submitMovie = () => {
   const newMovie = {
     Title: document.getElementById('Movie-Title').value,
     imageUrl: document.getElementById('Movie-url').value,
@@ -158,13 +156,12 @@ const submitMovie = (e) => {
   moviesData.addNewMovie(newMovie)
     .then(() => {
       document.getElementById('movie-form').classList.add('hide');
+      getUserMovie(firebase.auth().currentUser.uid); // eslint-disable-line no-use-before-define
       document.getElementById('Movie-Title').value = '';
       document.getElementById('Movie-url').value = '';
       document.getElementById('Movie-rating').value = '';
-      // getMovies(firebase.auth().currentUser.uid); // eslint-disable-line no-use-before-define
     })
     .catch(err => console.error('could not add movie', err));
-  movieDomStringBuilder();
 };
 
 const addMovieFormDomStringBuilder = () => {
@@ -189,6 +186,7 @@ const addMovieFormDomStringBuilder = () => {
   domString += '</form>';
   util.printToDom('movie-form', domString);
   document.getElementById('addNewMovie').addEventListener('click', submitMovie);
+  movieDomStringBuilder();
 };
 
 
