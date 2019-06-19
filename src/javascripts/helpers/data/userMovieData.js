@@ -19,10 +19,12 @@ const getUserMovieByUserId = userId => new Promise((resolve, reject) => {
 const editUserMovie = (watchlistId, userWatchlistObj) => axios.put(`${firebaseUrl}/userMovie/${watchlistId}.json`, userWatchlistObj);
 const editUserMovieByRating = (watchlistId, userWatchlistObj) => axios.put(`${firebaseUrl}/userMovie/${watchlistId}.json`, userWatchlistObj);
 const addUserMovie = userWatchlist => axios.post(`${firebaseUrl}/userMovie.json`, userWatchlist);
+const removeMovies = removeMovieId => axios.delete(`${firebaseUrl}/userMovie/${removeMovieId}.json`);
 
 export default {
   getUserMovieByUserId,
   editUserMovie,
   addUserMovie,
   editUserMovieByRating,
+  removeMovies,
 };
