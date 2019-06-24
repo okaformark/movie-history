@@ -1,4 +1,7 @@
 @import "~bootstrap/scss/bootstrap";
+@import url('https://fonts.googleapis.com/css?family=Faster+One&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Give+You+Glory&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Permanent+Marker&display=swap');
 
 body{
   background-color: black;
@@ -123,6 +126,20 @@ input[type="text"]:focus {
   text-align: center;
 }
 
+h5{
+  font-family: 'Faster One', cursive;
+  font-size: 20px;
+}
+label {
+  font-family: 'Give You Glory', cursive;
+}
+h6{
+  font-family: 'Permanent Marker', cursive;
+}
 .hide{
   display: none;
+}
+.row{
+  display: flex;
+  justify-content: center;
 }

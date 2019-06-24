@@ -22,6 +22,9 @@ const createMovieForm = () => {
 
 const addMovieEvent = () => {
   document.getElementById('addMovieBtn').addEventListener('click', createMovieForm);
+  document.getElementById('movie-navbar').addEventListener('click', () => {
+    document.getElementById('movie-div').classList.remove('hide');
+  });
 };
 
 export default { navBarEvents, addMovieEvent };

@@ -48,6 +48,7 @@ const addToWatchListByRating = (e) => {
 const showWatchList = () => {
   document.getElementById('movie-watchlist').classList.remove('hide');
   document.getElementById('movie-div').classList.add('hide');
+  getUserMovie(firebase.auth().currentUser.uid); // eslint-disable-line no-use-before-define
 };
 
 const deleteMovieEvent = (e) => {
@@ -57,24 +58,31 @@ const deleteMovieEvent = (e) => {
     .catch(err => console.error('could not delete this movie', err));
 };
 
+const removeMovieEvent = (e) => {
+  const removeMovieId = e.target.id.split('.')[1];
+  userMovieData.removeMovies(removeMovieId)
+    .then(() => getUserMovie(firebase.auth().currentUser.uid)) // eslint-disable-line no-use-before-define
+    .catch(err => console.error('could not remove from watchlist', err));
+};
 
 const watchListDomStringBuilder = (finalWatchList) => {
   let domString = '<div class="d-flex">';
   domString += '<div class="container">';
-  domString += '<div class= "card border-danger mb-2 m-2 col-3">';
-  domString += `<h4 class="card-header">${finalWatchList.Title}</h4>`;
-  domString += `<img class="card-img-top" src=${finalWatchList.imageUrl} height="300"/>`;
-  domString += `<div id = ${finalWatchList.id}>`;
-  domString += '<input type="radio" class= "removeMovie" name="selection">';
-  domString += '<label for="remove-movie">Remove from WatchList</label>';
-  domString += '</div>';
-  domString += `<h6>${finalWatchList.movieRating}</h6>`;
-  domString += '</div>';
-  domString += '</div>';
-  domString += '</div>';
+  finalWatchList.forEach((one) => {
+    domString += '<div class= "card border-danger mb-2 m-2 col-3">';
+    domString += `<h4 class="card-header">${one.Title}</h4>`;
+    domString += `<img class="card-img-top" src=${one.imageUrl} height="300"/>`;
+    domString += `<div id =${one.id}>`;
+    domString += `<input id="remove-movie.${one.id}" type="radio" class= "removeMovie" name="selection">`;
+    domString += `<label for="remove-movie.${one.id}">Remove from WatchList</label>`;
+    domString += '</div>';
+    domString += `<h6>${one.movieRating}</h6>`;
+    domString += '</div>';
+    domString += '</div>';
+    domString += '</div>';
+  });
   util.printToDom('movie-watchlist', domString);
-  // document.getElementById('movie-div').classList.add('hide');
-  document.getElementById('movie-watchlist').classList.add('hide');
+  addEvents(); // eslint-disable-line no-use-before-define
 };
 
 const addEvents = () => {
@@ -86,9 +94,13 @@ const addEvents = () => {
   for (let j = 0; j < ratingBtn.length; j += 1) {
     ratingBtn[j].addEventListener('click', addToWatchListByRating);
   }
-  const deleteMovieBtn = document.getElementsByClassName('removeMovie');
+  const deleteMovieBtn = document.getElementsByClassName('deleteMovie');
   for (let k = 0; k < deleteMovieBtn.length; k += 1) {
     deleteMovieBtn[k].addEventListener('click', deleteMovieEvent);
+  }
+  const removeFromWatchlist = document.getElementsByClassName('removeMovie');
+  for (let l = 0; l < removeFromWatchlist.length; l += 1) {
+    removeFromWatchlist[l].addEventListener('click', removeMovieEvent);
   }
   const myWatchList = document.getElementById('navbar-button-movieHistory');
   myWatchList.addEventListener('click', showWatchList);
@@ -101,14 +113,16 @@ const movieDomStringBuilder = () => {
   moviesData.getMovies().then((movieResp) => {
     movieResp.forEach((movie) => {
       domString += '<div class= "card border-danger mb-2 m-2 col-3">';
-      domString += `<h4 class="card-header">${movie.Title}</h4>`;
+      domString += '<div class="card-header">';
+      domString += `<h5>${movie.Title}</h5>`;
+      domString += '</div>';
       domString += `<img class="card-img-top" src=${movie.imageUrl} height="300"/>`;
       domString += `<div id = ${movie.id}>`;
       domString += `<input id="radio.${movie.id}" type="radio" class= "addMovie" name="selection" value="false">`;
       domString += `<label for="radio.${movie.id}">Add to WatchList</label>`;
       domString += '</div>';
       domString += `<div id= ${movie.id}>`;
-      domString += `<input id="delete-movie.${movie.id}"type="radio" class= "removeMovie" name="selection">`;
+      domString += `<input id="delete-movie.${movie.id}"type="radio" class= "deleteMovie" name="selection">`;
       domString += `<label for="delete-movie.${movie.id}">Delete this movie</label>`;
       domString += '</div>';
       domString += `<h6>${movie.movieRating}</h6>`;
@@ -133,8 +147,7 @@ const movieDomStringBuilder = () => {
   }).catch(err => console.error('could not get movie', err));
 };
 
-const submitMovie = (e) => {
-  e.preventDefault();
+const submitMovie = () => {
   const newMovie = {
     Title: document.getElementById('Movie-Title').value,
     imageUrl: document.getElementById('Movie-url').value,
@@ -144,13 +157,12 @@ const submitMovie = (e) => {
   moviesData.addNewMovie(newMovie)
     .then(() => {
       document.getElementById('movie-form').classList.add('hide');
+      getUserMovie(firebase.auth().currentUser.uid); // eslint-disable-line no-use-before-define
       document.getElementById('Movie-Title').value = '';
       document.getElementById('Movie-url').value = '';
       document.getElementById('Movie-rating').value = '';
-      // getMovies(firebase.auth().currentUser.uid); // eslint-disable-line no-use-before-define
     })
     .catch(err => console.error('could not add movie', err));
-  movieDomStringBuilder();
 };
 
 const addMovieFormDomStringBuilder = () => {
@@ -175,6 +187,7 @@ const addMovieFormDomStringBuilder = () => {
   domString += '</form>';
   util.printToDom('movie-form', domString);
   document.getElementById('addNewMovie').addEventListener('click', submitMovie);
+  movieDomStringBuilder();
 };
 
 
