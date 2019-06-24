@@ -25,6 +25,7 @@ A user can add a movie to their watchlist by clicking the *ADD TO WATCHLIST* but
 If a user wishes to remove a movie from their watchlist, they can click on the *REMOVE FROM WATCHLIST* button with updates on firebase and removes the movie from display accordingly
 ![removes from watchlist](https://raw.githubusercontent.com/okaformark/movie-history/master/src/images/removefromwatchlist.PNG)
 
+
 ## Technologies Used
 - HTML, SCSS, and JavaScript
 - axios.get, axios.post, axios.delete and axios.put
@@ -36,7 +37,8 @@ If a user wishes to remove a movie from their watchlist, they can click on the *
 
 ## How to Run
 - In the terminal, type ```$ npm start``` to run the webpage. 
-- To make a production build of this project, type ```$ npm run build```. This will create a folder called ```build``` with all of the minified codes you need.  
+- To make a production build of this project, type ```$ npm run build```. This will create a folder called ```build``` with all of the minified codes you need.
+- Link to firebase [Here](https://movie-history-2e70e.firebaseapp.com)
 
 ## Author 
 Mark Okafor
